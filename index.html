@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IAT: Cross-Cultural Aesthetic Perception</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400&family=Space+Grotesk:wght@400&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="title">
+        <img src="./Labs Eye.png" alt="Logo">
+        Cross-Cultural Aesthetic Perception IAT | Spring 2025
+    </header>
+
+    <main id="experiment">
+        <section class="intro">
+            <h1>Welcome</h1>
+            <p>This experiment investigates how people categorise culturally coded visual design with good/bad associations. It will take 5–7 minutes.</p>
+            <button onclick="startConsent()">Begin</button>
+        </section>
+
+        <section class="consent hidden">
+            <h2>Consent</h2>
+            <p>By clicking continue, you agree to anonymous data collection for educational purposes. No identifying information will be stored.</p>
+            <button onclick="startPreTask()">Continue</button>
+        </section>
+
+        <section class="pre-task hidden">
+            <h2>Pre-task Questionnaire</h2>
+            <label>"How appealing and familiar does this design feel to you?" (1–7)</label>
+            <input type="range" min="1" max="7" name="likert">
+
+            <label>"How confident are you in recognising visual styles?" (1–7)</label>
+            <input type="range" min="1" max="7" name="confidence">
+
+            <label>"Do you think your cultural background shapes how you see design?"</label>
+            <select name="culturalInfluence">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+                <option value="Unsure">Unsure</option>
+            </select>
+
+            <button onclick="startPractice1()">Next</button>
+        </section>
+
+        <section class="practice1 hidden">
+            <h2>Practice Round 1: Categorise Images</h2>
+            <div id="imageContainer"></div>
+            <p>Press 'E' for EAST, 'I' for WEST</p>
+        </section>
+
+        <section class="practice2 hidden">
+            <h2>Practice Round 2: Categorise Words</h2>
+            <div id="wordContainer"></div>
+            <p>Press 'E' for GOOD, 'I' for BAD</p>
+        </section>
+
+        <section class="trial1 hidden">
+            <h2>Trial A: Congruent Block</h2>
+            <p>Press 'E' for EAST or GOOD, 'I' for WEST or BAD</p>
+            <div id="stimulusContainer1"></div>
+        </section>
+
+        <section class="trial2 hidden">
+            <h2>Trial B: Incongruent Block</h2>
+            <p>Press 'E' for EAST or BAD, 'I' for WEST or GOOD</p>
+            <div id="stimulusContainer2"></div>
+        </section>
+
+        <section class="post-task hidden">
+            <h2>Post-Task Questionnaire</h2>
+            <label>Age: <input type="number" name="age"></label>
+            <label>Gender: <input type="text" name="gender"></label>
+            <label>Nationality: <input type="text" name="nationality"></label>
+            <label>Languages Spoken: <input type="text" name="language"></label>
+            <label>"How familiar are you with East Asian design?" (1–7)</label>
+            <input type="range" min="1" max="7" name="eastDesign">
+            <label>"How familiar are you with Western design?" (1–7)</label>
+            <input type="range" min="1" max="7" name="westDesign">
+            <label>Formal Design Training? <select><option>Yes</option><option>No</option></select></label>
+            <label>Reflection: <textarea placeholder="Did any pairings feel natural or difficult?"></textarea></label>
+            <button onclick="submitData()">Submit</button>
+        </section>
+
+        <section class="thank-you hidden">
+            <h2>Thank you!</h2>
+            <p>Your responses have been recorded.</p>
+        </section>
+    </main>
+
+    <!-- Placeholder for Google Sheets integration -->
+    <script>
+        function submitData() {
+            console.log("Submitting data to Google Sheets...");
+            document.querySelector('.post-task').classList.add('hidden');
+            document.querySelector('.thank-you').classList.remove('hidden');
+        }
+    </script>
+
+    <!-- External JS file with IAT logic -->
+    <script src="iat-script.js"></script>
+</body>
+</html>
