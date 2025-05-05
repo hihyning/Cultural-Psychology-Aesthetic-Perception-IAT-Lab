@@ -667,18 +667,19 @@ const GOOGLE_SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyCnC-AH
 
 function sendDataToGoogleSheets(payload) {
     fetch(GOOGLE_SHEETS_ENDPOINT, {
-        method: 'POST',
-        body: JSON.stringify(payload),
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include'
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log('Data sent to Google Sheets:', data);
-    })
-    .catch(err => {
-        console.error('Error sending data to Google Sheets:', err);
-    });
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log("Success:", data);
+      })
+      .catch(error => {
+        console.error("Error submitting data:", error);
+      });      
 }
 
 function collectParticipantData() {
