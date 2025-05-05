@@ -763,3 +763,17 @@ trialData.forEach(trial => {
   });
 }); 
 
+fetch("https://script.google.com/macros/s/AKfycbyCnC-AHWC2C26SCJUgRTk00sS4E5vVcddzYnVtYOYBo1Ym41n1PBFa3YWfMuasqc-VtA/exec", {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      section: "preTask",
+      confidence: 6,
+      familiarity: 5,
+      culturalInfluence: "Yes"
+    })
+  });
+  
