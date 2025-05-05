@@ -3,91 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IAT: Cross-Cultural Aesthetic Perception</title>
+    <title>Cultural Psychology Aesthetic Perception IAT Lab</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="./Yellow Lab Icon.png">
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400&family=Space+Grotesk:wght@400&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header class="title">
-        <img src="./Labs Eye.png" alt="Logo">
-        Cross-Cultural Aesthetic Perception IAT | Spring 2025
-    </header>
+    <!-- Landing Page -->
+    <div id="landing-page">
+        <div class="title">
+            <img src="./Yellow Lab Icon.png" alt="Lab Icon">
+            Cultural Psychology Aesthetic Perception IAT Lab
+            &nbsp;&nbsp;|&nbsp;&nbsp;Spring 2025
+        </div>
+        <header class="header">
+            <div class="title-container">
+                <h1>Cultural Psychology<br>& Visual Design</h1>
+                <h2>designed & coded by <a href="https://www.hyninggan.com/" target="_blank">hyning gan</a><br>ADVISED BY <a href="https://www.linkedin.com/in/hong-b-nguyen" target="_blank">Hong Nguyen</a></h2>
+            </div>
+            <section class="course-description">
+                <h3>About This Project</h3>
+                <p>This interactive web experiment was developed as part of my personal and academic research informed by <a href="https://courses.newschool.edu/courses/LPSY3026/" target="_blank">LPSY 3026</a> at <a href="https://www.newschool.edu/lang/psychology/" target="_blank">The New School</a>. It explores how individuals categorise visual and written information in real time and your inputs will contribute to my ongoing research into how culture and cognition shape our instinctive responses to design.
+                <br><br>
+                The task takes approximately 5–7 minutes to complete.<br>No prior experience is required.<br>
+                Reach me @ <a href="mailto:ganh651@newschool.edu" target="_blank">ganh651@newschool.edu</a></p>
+            </section>
+        </header>
+        <button id="begin-button" onclick="startExperiment()">Begin</button>
+    </div>
 
-    <main id="experiment">
-        <section class="intro">
-            <h1>Welcome</h1>
-            <p>This experiment investigates how people categorise culturally coded visual design with good/bad associations. It will take 5–7 minutes.</p>
-            <button onclick="startConsent()">Begin</button>
-        </section>
+    <!-- Experiment Sections (initially hidden) -->
+    <div id="experiment" class="hidden">
+        <h2 class="experiment-title">Pre-task Questionnaire</h2>
+        <main>
+            <section class="intro">
+                <button onclick="startConsent()">Begin</button>
+            </section>
 
-        <section class="consent hidden">
-            <h2>Consent</h2>
-            <p>By clicking continue, you agree to anonymous data collection for educational purposes. No identifying information will be stored.</p>
-            <button onclick="startPreTask()">Continue</button>
-        </section>
+            <section class="consent hidden">
+                <p>By clicking continue, you agree to anonymous data collection for educational purposes.<br>
+                No personal or identifiable information is stored.
+                </p>
+                <button onclick="startPreTask()">Continue</button>
+            </section>
 
-        <section class="pre-task hidden">
-            <h2>Pre-task Questionnaire</h2>
-            <label>"How appealing and familiar does this design feel to you?" (1–7)</label>
-            <input type="range" min="1" max="7" name="likert">
+            <section class="pre-task hidden">
+                <label>How confident are you in identifying different visual styles?<br>
+                <span class="slider-label">(1 = Not confident at all, 7 = Extremely confident)</span></label>
+                <div class="slider-container">
+                    <span class="slider-number">1</span>
+                    <div class="slider-wrapper">
+                        <input type="range" min="1" max="7" name="confidence" class="styled-slider" oninput="updateSliderValue(this)">
+                        <div class="slider-value">4</div>
+                    </div>
+                    <span class="slider-number">7</span>
+                </div>
 
-            <label>"How confident are you in recognising visual styles?" (1–7)</label>
-            <input type="range" min="1" max="7" name="confidence">
+                <label>How familiar are you with a range of global design styles?<br>
+                <span class="slider-label">(1 = Not familiar at all, 7 = Extremely familiar)</span></label>
+                <div class="slider-container">
+                    <span class="slider-number">1</span>
+                    <div class="slider-wrapper">
+                        <input type="range" min="1" max="7" name="familiarity" class="styled-slider" oninput="updateSliderValue(this)">
+                        <div class="slider-value">4</div>
+                    </div>
+                    <span class="slider-number">7</span>
+                </div>
 
-            <label>"Do you think your cultural background shapes how you see design?"</label>
-            <select name="culturalInfluence">
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-                <option value="Unsure">Unsure</option>
-            </select>
+                <label>Do you think your cultural background influences your perception of design?</label>
+                <select name="culturalInfluence">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                    <option value="Unsure">Unsure</option>
+                </select>
 
-            <button onclick="startPractice1()">Next</button>
-        </section>
+                <button onclick="startPractice1()">Next</button>
+            </section>
 
-        <section class="practice1 hidden">
-            <h2>Practice Round 1: Categorise Images</h2>
-            <div id="imageContainer"></div>
-            <p>Press 'E' for EAST, 'I' for WEST</p>
-        </section>
+            <h2 class="experiment-title">Practice Round 1: Categorise Images</h2>
+            <section class="practice1 hidden">
+                <div id="practice1-instructions" class="instructions">
+                    <p>In this practice round, you will be shown a series of visual design images, one at a time.</p>
+                    <p>Your task is to categorise each image as either representing an <strong>Eastern</strong> or <strong>Western</strong> design style based on your best judgment.</p>
+                    <p>Please respond as quickly and accurately as possible.</p>
+                    <p>Use the following keys:</p>
+                    <p>Press <span class="key">E</span> for EAST<br>
+                    Press <span class="key">I</span> for WEST</p>
+                    <p>The next image will appear automatically after each response.</p>
+                    <p>This round is for practice only.<br>Your data will not be recorded at this stage.</p>
+                    <button id="practice-button" onclick="startImagePractice()">Begin Practice 1</button>
+                </div>
+                <div id="practice1-content" class="practice-content">
+                    <div class="response-keys">
+                        <span class="key-label">EAST</span>
+                        <span class="key-label">WEST</span>
+                    </div>
+                    <div id="imageContainer"></div>
+                </div>
+            </section>
 
-        <section class="practice2 hidden">
-            <h2>Practice Round 2: Categorise Words</h2>
-            <div id="wordContainer"></div>
-            <p>Press 'E' for GOOD, 'I' for BAD</p>
-        </section>
+            <h2 class="experiment-title">Practice Round 2: Categorise Words</h2>
+            <section class="practice2 hidden">
+                <div id="practice2-instructions" class="instructions">
+                    <p>In this next practice round, you will be shown a series of words, one at a time.</p>
+                    <p>Your task is to categorise each word as either <strong>GOOD</strong> or <strong>BAD</strong> based off their connotations as quickly and accurately as possible.</p>
+                    <p>Use the following keys:</p>
+                    <p>Press <span class="key">E</span> for GOOD<br>
+                    Press <span class="key">I</span> for BAD</p>
+                    <p>The next word will appear automatically after each response.</p>
+                    <p>This round is for practice only.<br>Your data will not be recorded at this stage.</p>
+                    <button id="practice-button" onclick="startWordPractice()">Begin Practice 2</button>
+                </div>
+                <div id="practice2-content" class="practice-content" style="display:none;">
+                    <div class="response-keys">
+                        <span class="key-label">GOOD</span>
+                        <span class="key-label">BAD</span>
+                    </div>
+                    <div id="wordContainer"></div>
+                </div>
+            </section>
 
-        <section class="trial1 hidden">
-            <h2>Trial A: Congruent Block</h2>
-            <p>Press 'E' for EAST or GOOD, 'I' for WEST or BAD</p>
-            <div id="stimulusContainer1"></div>
-        </section>
+            <h2 class="experiment-title">Trial 1</h2>
+            <section class="trial1 hidden">
+                <div id="trial1-instructions" class="instructions">
+                    <p>In this trial, you will categorise a mix of images and words.</p>
+                    <p>Use the following keys:</p>
+                    <p>Press <span class="key">E</span> for EAST or GOOD<br>
+                    Press <span class="key">I</span> for WEST or BAD</p>
+                    <p>The next item will appear automatically after each response.</p>
+                    <p>Please respond as quickly and accurately as possible.<br>Your data will be recorded from this point onward.</p>
+                    <button id="trial1-begin" onclick="startTrial1()">Begin Trial 1</button>
+                </div>
+                <div id="trial1-content" class="practice-content" style="display:none;">
+                    <div class="response-keys">
+                        <span class="key-label">EAST / GOOD</span>
+                        <span class="key-label">WEST / BAD</span>
+                    </div>
+                    <div id="stimulusContainer1"></div>
+                </div>
+            </section>
 
-        <section class="trial2 hidden">
-            <h2>Trial B: Incongruent Block</h2>
-            <p>Press 'E' for EAST or BAD, 'I' for WEST or GOOD</p>
-            <div id="stimulusContainer2"></div>
-        </section>
+            <h2 class="experiment-title">Trial 2</h2>
+            <section class="trial2 hidden">
+                <div id="trial2-instructions" class="instructions">
+                    <p>In this trial, you will categorise a mix of images and words.</p>
+                    <p>Use the following keys:</p>
+                    <p>Press <span class="key">E</span> for EAST or BAD<br>
+                    Press <span class="key">I</span> for WEST or GOOD</p>
+                    <p>The next item will appear automatically after each response.</p>
+                    <p>Please respond as quickly and accurately as possible.<br>Your data will be recorded from this point onward.</p>
+                    <button id="trial2-begin">Begin Trial 2</button>
+                </div>
+                <div id="trial2-content" class="practice-content" style="display:none;">
+                    <div class="response-keys">
+                        <span class="key-label">EAST / BAD</span>
+                        <span class="key-label">WEST / GOOD</span>
+                    </div>
+                    <div id="stimulusContainer2"></div>
+                </div>
+            </section>
+            
+            <h2 class="experiment-title">Post-Task Questionnaire</h2>
+            <section class="post-task hidden">
+                <label>Country or culture you most identify with: <input type="text" name="culturalID"></label>
+                
+                <label>Did one trial feel easier than the other? 
+                  <select name="easierBlock"><option>Yes</option><option>No</option><option>Unsure</option></select>
+                </label>
+                
+                <label>If yes, which part felt easier and why?<br>(TRAIL 1: EAST/GOOD, WEST/BAD  |  TRAIL 2: EAST/BAD, WEST/GOOD)</label>
+                <textarea name="blockReflection" placeholder="(Optional) Describe what felt natural or difficult."></textarea>
+                
+                <label>Do you feel your cultural background influenced your responses?</label>
+                <select name="influencedByCulture">
+                  <option>Yes</option>
+                  <option>No</option>
+                  <option>Unsure</option>
+                </select>
 
-        <section class="post-task hidden">
-            <h2>Post-Task Questionnaire</h2>
-            <label>Age: <input type="number" name="age"></label>
-            <label>Gender: <input type="text" name="gender"></label>
-            <label>Nationality: <input type="text" name="nationality"></label>
-            <label>Languages Spoken: <input type="text" name="language"></label>
-            <label>"How familiar are you with East Asian design?" (1–7)</label>
-            <input type="range" min="1" max="7" name="eastDesign">
-            <label>"How familiar are you with Western design?" (1–7)</label>
-            <input type="range" min="1" max="7" name="westDesign">
-            <label>Formal Design Training? <select><option>Yes</option><option>No</option></select></label>
-            <label>Reflection: <textarea placeholder="Did any pairings feel natural or difficult?"></textarea></label>
-            <button onclick="submitData()">Submit</button>
-        </section>
+                <label>Have you received formal design education?
+                    <select name="formalDesignEducation" id="formalDesignEducation" onchange="document.getElementById('designEducationWhere').style.display = this.value === 'Yes' ? 'block' : 'none';">
+                        <option value="No">No</option>
+                        <option value="Yes">Yes</option>
+                    </select>
+                </label>
 
-        <section class="thank-you hidden">
-            <h2>Thank you!</h2>
-            <p>Your responses have been recorded.</p>
-        </section>
-    </main>
+                <label>How often do you engage with visual or graphic design?<br>
+                    <span class="slider-label">(1 = Never, 7 = Always)</span></label>
+                    <div class="slider-container">
+                        <span class="slider-number">1</span>
+                        <div class="slider-wrapper">
+                            <input type="range" min="1" max="7" name="designExposure" class="styled-slider" oninput="updateSliderValue(this)">
+                            <div class="slider-value">4</div>
+                        </div>
+                        <span class="slider-number">7</span>
+                    </div>
+                    
+                <input type="text" name="designEducationWhere" id="designEducationWhere" placeholder="If yes, where?" style="display:none; margin-top: 0.5em; width: 100%;" />
+                
+                <button onclick="submitData()">Submit</button>
+            </section>
+
+            <h2 class="experiment-title">Thank you!</h2>
+            <section class="thank-you hidden">
+                <p>Your responses have been recorded.</p>
+                <p>If you would like to learn more about the purpose and research aims of this study, you may access a debrief below.</p>
+                <button onclick="document.querySelector('.thank-you').classList.add('hidden'); window.location.href='debrief.html';">View Debrief</button>
+            </section>
+        </main>
+    </div>
 
     <!-- Placeholder for Google Sheets integration -->
     <script>

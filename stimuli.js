@@ -1,12 +1,16 @@
 // Visual design images: filenames are assumed to be in ./images/
 const eastImages = [
-    "East1.jpg", "East2.jpg", "East3.jpg", "East4.jpg", "East5.jpg",
-    "East6.jpg", "East7.jpg", "East8.jpg", "East9.jpg", "East10.jpg"
+    "Visual Stimuli/East/East1.png", "Visual Stimuli/East/East2.png", "Visual Stimuli/East/East3.png", 
+    "Visual Stimuli/East/East4.png", "Visual Stimuli/East/East5.png", "Visual Stimuli/East/East6.png", 
+    "Visual Stimuli/East/East7.png", "Visual Stimuli/East/East8.png", "Visual Stimuli/East/East9.png", 
+    "Visual Stimuli/East/East10.png"
 ];
 
 const westImages = [
-    "West1.jpg", "West2.jpg", "West3.jpg", "West4.jpg", "West5.jpg",
-    "West6.jpg", "West7.jpg", "West8.jpg", "West9.jpg", "West10.jpg"
+    "Visual Stimuli/West/West11.png", "Visual Stimuli/West/West12.png", "Visual Stimuli/West/West13.png", 
+    "Visual Stimuli/West/West14.png", "Visual Stimuli/West/West15.png", "Visual Stimuli/West/West16.png", 
+    "Visual Stimuli/West/West17.png", "Visual Stimuli/West/West18.png", "Visual Stimuli/West/West19.png", 
+    "Visual Stimuli/West/West20.png"
 ];
 
 // Word stimuli
