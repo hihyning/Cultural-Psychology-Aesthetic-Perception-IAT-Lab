@@ -593,17 +593,15 @@ function showPostTask() {
 }
 
 function submitData() {
-    // Collect participant data
     const participantData = collectParticipantData();
-    const preTaskData = collectPreTaskData(); // Collect pre-task data
-    // Compute scores
+    const preTaskData = collectPreTaskData();
     const computedScores = computeIATScores(trialData);
-    // Send everything
+
     sendDataToGoogleSheets({
         section: 'postTask',
         trialData,
         participantData,
-        preTaskData, // Include pre-task data
+        preTaskData,
         computedScores,
         timestamp: Date.now()
     });
@@ -666,20 +664,20 @@ function computeIATScores(trialData) {
 const GOOGLE_SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyCnC-AHWC2C26SCJUgRTk00sS4E5vVcddzYnVtYOYBo1Ym41n1PBFa3YWfMuasqc-VtA/exec';
 
 function sendDataToGoogleSheets(payload) {
-    fetch(GOOGLE_SHEETS_ENDPOINT, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-      })
-      .then(response => response.json())
-      .then(data => {
-        console.log("Success:", data);
-      })
-      .catch(error => {
-        console.error("Error submitting data:", error);
-      });      
+  const formBody = Object.entries(payload)
+    .map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(v))
+    .join('&');
+
+  fetch(GOOGLE_SHEETS_ENDPOINT, {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: formBody
+  })
+  .then(() => console.log("Data sent (opaque response)"))
+  .catch(error => console.error("Error sending data:", error));
 }
 
 function collectParticipantData() {
@@ -731,5 +729,37 @@ function doOptions(e) {
     .setHeader("Access-Control-Allow-Origin", "*")
     .setHeader("Access-Control-Allow-Methods", "POST, OPTIONS")
     .setHeader("Access-Control-Allow-Headers", "Content-Type");
-} 
+}
+
+function sendTrial(trial) {
+  const formBody = Object.entries(trial)
+    .map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(v))
+    .join('&');
+
+  fetch(GOOGLE_SHEETS_ENDPOINT, {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    },
+    body: formBody
+  });
+}
+
+// Example usage:
+trialData.forEach(trial => {
+  sendTrial({
+    timestamp: Date.now(),
+    section: 'trial',
+    trial: trial.trial,
+    stimulusType: trial.stimulusType,
+    stimulus: trial.stimulus,
+    correctLabel: trial.correctLabel,
+    userKey: trial.userKey,
+    userLabel: trial.userLabel,
+    correct: trial.correct,
+    rt: trial.rt,
+    // ...add any other flat fields you want
+  });
+}); 
 
