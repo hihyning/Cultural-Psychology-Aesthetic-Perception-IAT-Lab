@@ -592,18 +592,56 @@ function showPostTask() {
     document.querySelector('.experiment-title').textContent = 'Post-Task Questionnaire';
 }
 
-function submitData() {
-    const participantData = collectParticipantData();
-    const preTaskData = collectPreTaskData();
-    const computedScores = computeIATScores(trialData);
+function computeTrialSummary(trialData, trialNumber) {
+    const trials = trialData.filter(t => t.trial === trialNumber);
+    const correct = trials.filter(t => t.correct).length;
+    const incorrect = trials.length - correct;
+    const percentCorrect = trials.length ? (correct / trials.length) * 100 : 0;
+    const avgRT = trials.length ? Math.round(trials.reduce((sum, t) => sum + t.rt, 0) / trials.length) : 0;
+    return { correct, incorrect, percentCorrect, avgRT };
+}
 
-    sendDataToGoogleSheets({
-        section: 'postTask',
-        participantData,
-        preTaskData,
-        computedScores,
-        timestamp: Date.now()
-    });
+function submitData() {
+    const preTask = collectPreTaskData();
+    const participant = collectParticipantData();
+    const trial1 = computeTrialSummary(trialData, 1);
+    const trial2 = computeTrialSummary(trialData, 2);
+
+    // Compose a flat payload for one row per participant
+    const payload = {
+        // Pre-task
+        preTaskTimestamp: preTask.timestamp || new Date().toISOString(),
+        confidence: preTask.confidence,
+        familiarity: preTask.familiarity,
+        culturalInfluence: preTask.culturalInfluence,
+
+        // Trial 1 summary
+        trial1Timestamp: new Date().toISOString(),
+        trial1_correct: trial1.correct,
+        trial1_incorrect: trial1.incorrect,
+        trial1_percentCorrect: trial1.percentCorrect,
+        trial1_avgRT: trial1.avgRT,
+
+        // Trial 2 summary
+        trial2Timestamp: new Date().toISOString(),
+        trial2_correct: trial2.correct,
+        trial2_incorrect: trial2.incorrect,
+        trial2_percentCorrect: trial2.percentCorrect,
+        trial2_avgRT: trial2.avgRT,
+
+        // Post-task
+        postTaskTimestamp: new Date().toISOString(),
+        culturalID: participant.culturalID,
+        designExposure: participant.designExposure,
+        formalDesignEducation: participant.formalDesignEducation,
+        designEducationWhere: participant.designEducationWhere,
+        easierBlock: participant.easierBlock,
+        blockReflection: participant.blockReflection,
+        influencedByCulture: participant.influencedByCulture
+    };
+
+    sendDataToGoogleSheets(payload);
+
     document.querySelector('.post-task').classList.add('hidden');
     document.querySelector('.thank-you').classList.remove('hidden');
     document.querySelector('.experiment-title').textContent = 'Thank you!';
@@ -660,7 +698,7 @@ function computeIATScores(trialData) {
 }
 
 // Google Sheets Integration
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxYcSYRRPa-trcGdwbJTcGv3IcPn4pQg8J_57Hlv73vvMKjBvhqKYy5QNJ_kRA3wjX6ug/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxuCYf6ghnqTBjcXPFUCISV2U5t_y5fAKGsVjxajp0tdNQU7EP2Bf1e5p92_Htu3gGbCg/exec';
 
 // Flattens nested objects (e.g., participantData, preTaskData) into a single-level object
 function flattenObject(obj, prefix = '', res = {}) {
@@ -675,72 +713,20 @@ function flattenObject(obj, prefix = '', res = {}) {
 }
 
 // Append data to the spreadsheet
-async function sendDataToGoogleSheets(data) {
+async function sendDataToGoogleSheets(payload) {
     try {
-        console.log('Starting sendDataToGoogleSheets...');
-        console.log('Using Script URL:', SCRIPT_URL);
-
-        // Flatten all nested objects in your payload
-        let flatPayload = flattenObject(data);
-
-        // Remove arrays (e.g., trialData) since they can't be sent as flat fields
-        if (flatPayload.trialData) delete flatPayload.trialData;
-        if (flatPayload.computedScores) {
-            // Optionally flatten computedScores
-            flatPayload = { ...flatPayload, ...flattenObject(data.computedScores, 'computedScores_') };
-            delete flatPayload.computedScores;
-        }
-
-        // Add timestamp if not present
-        if (!flatPayload.timestamp) flatPayload.timestamp = new Date().toISOString();
-
-        console.log('Sending data to spreadsheet:', flatPayload);
-
-        // Try POST first
-        try {
-            const response = await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(flatPayload)
-            });
-
-            console.log('POST Response:', response);
-            console.log('Data likely sent successfully (no-cors mode prevents detailed response info)');
-            return true;
-
-        } catch (fetchError) {
-            console.error('POST request failed:', fetchError);
-
-            // Fallback to GET request with parameters
-            console.log('Trying GET fallback...');
-            const urlWithParams = new URL(SCRIPT_URL);
-            Object.keys(flatPayload).forEach(key => {
-                urlWithParams.searchParams.append(key, flatPayload[key]);
-            });
-
-            try {
-                const getResponse = await fetch(urlWithParams.toString(), {
-                    method: 'GET',
-                    mode: 'no-cors'
-                });
-                console.log('GET fallback response:', getResponse);
-                return true;
-            } catch (getError) {
-                console.error('GET fallback failed:', getError);
-                throw getError;
-            }
-        }
-    } catch (error) {
-        console.error('Error in sendDataToGoogleSheets:', error);
-        console.error('Error details:', {
-            message: error.message,
-            stack: error.stack,
-            name: error.name
+        const response = await fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
         });
-        return false;
+        // You won't get a readable response in no-cors mode, but the data will be sent
+        console.log('Data likely sent successfully (no-cors mode)');
+    } catch (error) {
+        console.error('Error sending data:', error);
     }
 }
 
