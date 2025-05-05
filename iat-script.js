@@ -664,20 +664,17 @@ function computeIATScores(trialData) {
 const GOOGLE_SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyCnC-AHWC2C26SCJUgRTk00sS4E5vVcddzYnVtYOYBo1Ym41n1PBFa3YWfMuasqc-VtA/exec';
 
 function sendDataToGoogleSheets(payload) {
-  const formBody = Object.entries(payload)
-    .map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(v))
-    .join('&');
-
-  fetch(GOOGLE_SHEETS_ENDPOINT, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
-    },
-    body: formBody
-  })
-  .then(() => console.log("Data sent (opaque response)"))
-  .catch(error => console.error("Error sending data:", error));
-}
+    fetch(GOOGLE_SHEETS_ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => console.log("✅ Data sent:", data))
+    .catch(error => console.error("❌ Error sending data:", error));
+  }
 
 function collectParticipantData() {
     // Collects participant metadata from the post-task questionnaire
@@ -760,19 +757,3 @@ function sendTrial(trial) {
     console.error("Error sending trial data:", error);
   });
 }
-
-// Example usage:
-trialData.forEach(trial => {
-  sendTrial({
-    section: 'trial',
-    trial: trial.trial,
-    stimulusType: trial.stimulusType,
-    stimulus: trial.stimulus,
-    correctLabel: trial.correctLabel,
-    userKey: trial.userKey,
-    userLabel: trial.userLabel,
-    correct: trial.correct,
-    rt: trial.rt,
-    timestamp: Date.now()
-  });
-}); 
