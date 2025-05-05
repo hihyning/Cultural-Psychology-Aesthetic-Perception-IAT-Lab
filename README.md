@@ -116,29 +116,6 @@ Gathers metadata:
 
 ---
 
-### 📎 Technical Goals for Cursor
-
-* Build reaction time tracking per stimulus using `Date.now()` or `performance.now()`
-* Add stimuli randomisation without biasing sequence
-* Store participant input in `localStorage` or JS object
-* Batch post data to Google Sheets endpoint (via POST request to Apps Script)
-* Ensure `E` / `I` keypress listeners are context-aware (depend on block type)
-* Allow response correction timeout (e.g. max 2s before skipping)
-* Standardise image size/display format for clean UX
-
----
-
-### 🧰 Remaining Tasks
-
-* [ ] Implement stimulus logic (load images/words from arrays)
-* [ ] Randomise and present trials (balanced and fair)
-* [ ] Add RT and accuracy tracking to each trial
-* [ ] Google Sheets POST integration
-* [ ] Stimulus appendix (20 visual works, title + artist + year + region)
-* [ ] Export results and provide downloadable .csv if needed
-
----
-
 ### 🧾 Example Key Mapping Logic (JS)
 
 ```js
