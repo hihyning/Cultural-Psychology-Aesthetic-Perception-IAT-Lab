@@ -664,18 +664,22 @@ function computeIATScores(trialData) {
 const GOOGLE_SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxX13XLZxDo5ZMIRB5vvePyl-tnrMav20xV5jdBDJ3r4N8nkvmCx9T6lrwUJFmHoIklww/exec';
 
 function sendDataToGoogleSheets(payload) {
+    const formData = new URLSearchParams();
+    for (const key in payload) {
+      const value = typeof payload[key] === 'object' ? JSON.stringify(payload[key]) : payload[key];
+      formData.append(key, value);
+    }
+  
     fetch(GOOGLE_SHEETS_ENDPOINT, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: formData.toString()
     })
-    .then(response => response.json())
-    .then(data => console.log("✅ Data sent:", data))
-    .catch(error => console.error("❌ Error sending data:", error));
-  }
-
+      .then(response => response.text())
+      .then(data => console.log("✅ Data sent (urlencoded):", data))
+      .catch(error => console.error("❌ Error sending data:", error));
+  }  
+  
 function collectParticipantData() {
     // Collects participant metadata from the post-task questionnaire
     const getVal = name => {
