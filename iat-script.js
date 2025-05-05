@@ -663,7 +663,7 @@ function computeIATScores(trialData) {
 }
 
 // Google Sheets integration endpoint (replace with your actual endpoint)
-const GOOGLE_SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbzp9Gp9YmZAGePUImw069Am3uFGMuIzmDyQ8Tqa5Ufbr8noDQPAgo9RkaGrCzrlt_ZNMA/exec';
+const GOOGLE_SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyCnC-AHWC2C26SCJUgRTk00sS4E5vVcddzYnVtYOYBo1Ym41n1PBFa3YWfMuasqc-VtA/exec';
 
 function sendDataToGoogleSheets(payload) {
     fetch(GOOGLE_SHEETS_ENDPOINT, {
