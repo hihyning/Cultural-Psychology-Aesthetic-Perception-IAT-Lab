@@ -698,7 +698,7 @@ function computeIATScores(trialData) {
 }
 
 // Google Sheets Integration
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzw8v30jhooHW3XSRiT8cl9n8flbmA52nnWtnjwWmBvvIgeTCSb0iZYfY7Lt9THpCZIFA/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxSXb50RFFr8bGWab8Q147snQWnKRwT1iO--OnRGEbmbUeppVtAylmWrUk58dAK-UYELA/exec';
 
 // Flattens nested objects (e.g., participantData, preTaskData) into a single-level object
 function flattenObject(obj, prefix = '', res = {}) {
@@ -811,3 +811,4 @@ function sendTrial(trial) {
     console.error("Error sending trial data:", error);
   });
 }
+
