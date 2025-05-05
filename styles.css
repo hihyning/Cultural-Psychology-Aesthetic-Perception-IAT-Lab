@@ -641,3 +641,15 @@ section.post-task {
     overflow-y: auto;
     padding-bottom: 2em;
 }
+
+.debrief-content {
+    max-height: 80vh;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    padding: 1em;
+    box-sizing: border-box;
+}
+
+.debrief-content p{
+    font-size: 1.1rem;
+}
