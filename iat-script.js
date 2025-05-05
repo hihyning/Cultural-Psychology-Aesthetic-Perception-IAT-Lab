@@ -607,30 +607,32 @@ function submitData() {
     const trial1 = computeTrialSummary(trialData, 1);
     const trial2 = computeTrialSummary(trialData, 2);
 
-    // Compose a flat payload for one row per participant
+    // Compose a flat payload for one row per participant, using local time for all timestamps
     const payload = {
+        section: "summary",
+
         // Pre-task
-        preTaskTimestamp: preTask.timestamp || new Date().toISOString(),
+        preTaskTimestamp: new Date().toLocaleString(),
         confidence: preTask.confidence,
         familiarity: preTask.familiarity,
         culturalInfluence: preTask.culturalInfluence,
 
         // Trial 1 summary
-        trial1Timestamp: new Date().toISOString(),
+        trial1Timestamp: new Date().toLocaleString(),
         trial1_correct: trial1.correct,
         trial1_incorrect: trial1.incorrect,
         trial1_percentCorrect: trial1.percentCorrect,
         trial1_avgRT: trial1.avgRT,
 
         // Trial 2 summary
-        trial2Timestamp: new Date().toISOString(),
+        trial2Timestamp: new Date().toLocaleString(),
         trial2_correct: trial2.correct,
         trial2_incorrect: trial2.incorrect,
         trial2_percentCorrect: trial2.percentCorrect,
         trial2_avgRT: trial2.avgRT,
 
         // Post-task
-        postTaskTimestamp: new Date().toISOString(),
+        postTaskTimestamp: new Date().toLocaleString(),
         culturalID: participant.culturalID,
         designExposure: participant.designExposure,
         formalDesignEducation: participant.formalDesignEducation,
@@ -698,7 +700,7 @@ function computeIATScores(trialData) {
 }
 
 // Google Sheets Integration deployed
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzONFGHPGtiZjvM13Tmn9fD9SxKVUwmdW5jmwDmsglyBafY4qySfMJ8tIcodhPsoupHDA/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx96CDdhJBbE6U_tT0KC7eZNUyeAtGcDGUe7BfRZG_s8BAoDR6zwUq8XYYnG1Tb_rbbMA/exec';
 
 // Flattens nested objects (e.g., participantData, preTaskData) into a single-level object
 function flattenObject(obj, prefix = '', res = {}) {
