@@ -670,7 +670,6 @@ function sendDataToGoogleSheets(payload) {
 
   fetch(GOOGLE_SHEETS_ENDPOINT, {
     method: "POST",
-    mode: "no-cors",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded"
     },
