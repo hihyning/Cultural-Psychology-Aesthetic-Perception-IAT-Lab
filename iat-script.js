@@ -294,7 +294,7 @@ function startTrial1() {
     // Hide practice2, show trial1
     document.querySelector('.practice2').classList.add('hidden');
     document.querySelector('.trial1').classList.remove('hidden');
-    document.querySelector('.experiment-title').textContent = 'Trial 1: Congruent Block';
+    document.querySelector('.experiment-title').textContent = 'Trial 1';
 
     // Shuffle and split images/words for trial 1 and 2
     let allImages = [...eastImages, ...westImages];
@@ -365,7 +365,7 @@ function startTrial2() {
     if (trial1Complete) trial1Complete.style.display = 'none';
     document.querySelector('.trial1').classList.add('hidden');
     document.querySelector('.trial2').classList.remove('hidden');
-    document.querySelector('.experiment-title').textContent = 'Trial 2: Incongruent Block';
+    document.querySelector('.experiment-title').textContent = 'Trial 2';
     document.getElementById('trial2-instructions').style.display = 'block';
     document.getElementById('trial2-content').style.display = 'none';
     trial2Stimuli = [...trial2Images, ...trial2Words];
