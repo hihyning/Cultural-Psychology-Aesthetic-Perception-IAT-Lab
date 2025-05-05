@@ -732,24 +732,25 @@ function doOptions(e) {
 }
 
 function sendTrial(trial) {
-  const formBody = Object.entries(trial)
-    .map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(v))
-    .join('&');
-
   fetch(GOOGLE_SHEETS_ENDPOINT, {
     method: "POST",
-    mode: "no-cors",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded"
+      "Content-Type": "application/json"
     },
-    body: formBody
+    body: JSON.stringify(trial)
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log("Trial sent:", data);
+  })
+  .catch(error => {
+    console.error("Error sending trial data:", error);
   });
 }
 
 // Example usage:
 trialData.forEach(trial => {
   sendTrial({
-    timestamp: Date.now(),
     section: 'trial',
     trial: trial.trial,
     stimulusType: trial.stimulusType,
@@ -759,6 +760,6 @@ trialData.forEach(trial => {
     userLabel: trial.userLabel,
     correct: trial.correct,
     rt: trial.rt,
-    // ...add any other flat fields you want
+    timestamp: Date.now()
   });
 }); 
