@@ -599,7 +599,6 @@ function submitData() {
 
     sendDataToGoogleSheets({
         section: 'postTask',
-        trialData,
         participantData,
         preTaskData,
         computedScores,
@@ -660,26 +659,91 @@ function computeIATScores(trialData) {
     };
 }
 
-// Google Sheets integration endpoint (replace with your actual endpoint)
-const GOOGLE_SHEETS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyQdbAG_6HjHlLwAoT_cRZitR95izv1jdi9iTKPRIa6qWOp6UNePHQpgBwo0gQv4Xb6eQ/exec';
+// Google Sheets Integration
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQdbAG_6HjHlLwAoT_cRZitR95izv1jdi9iTKPRIa6qWOp6UNePHQpgBwo0gQv4Xb6eQ/exec';
 
-function sendDataToGoogleSheets(payload) {
-    const formData = new URLSearchParams();
-    for (const key in payload) {
-      const value = typeof payload[key] === 'object' ? JSON.stringify(payload[key]) : payload[key];
-      formData.append(key, value);
+// Flattens nested objects (e.g., participantData, preTaskData) into a single-level object
+function flattenObject(obj, prefix = '', res = {}) {
+    for (let key in obj) {
+        if (typeof obj[key] === 'object' && obj[key] !== null && !Array.isArray(obj[key])) {
+            flattenObject(obj[key], prefix + key + '_', res);
+        } else {
+            res[prefix + key] = obj[key];
+        }
     }
-  
-    fetch(GOOGLE_SHEETS_ENDPOINT, {
-      method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      body: formData.toString()
-    })
-      .then(response => response.text())
-      .then(data => console.log("✅ Data sent (urlencoded):", data))
-      .catch(error => console.error("❌ Error sending data:", error));
-  }  
-  
+    return res;
+}
+
+// Append data to the spreadsheet
+async function sendDataToGoogleSheets(data) {
+    try {
+        console.log('Starting sendDataToGoogleSheets...');
+        console.log('Using Script URL:', SCRIPT_URL);
+
+        // Flatten all nested objects in your payload
+        let flatPayload = flattenObject(data);
+
+        // Remove arrays (e.g., trialData) since they can't be sent as flat fields
+        if (flatPayload.trialData) delete flatPayload.trialData;
+        if (flatPayload.computedScores) {
+            // Optionally flatten computedScores
+            flatPayload = { ...flatPayload, ...flattenObject(data.computedScores, 'computedScores_') };
+            delete flatPayload.computedScores;
+        }
+
+        // Add timestamp if not present
+        if (!flatPayload.timestamp) flatPayload.timestamp = new Date().toISOString();
+
+        console.log('Sending data to spreadsheet:', flatPayload);
+
+        // Try POST first
+        try {
+            const response = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(flatPayload)
+            });
+
+            console.log('POST Response:', response);
+            console.log('Data likely sent successfully (no-cors mode prevents detailed response info)');
+            return true;
+
+        } catch (fetchError) {
+            console.error('POST request failed:', fetchError);
+
+            // Fallback to GET request with parameters
+            console.log('Trying GET fallback...');
+            const urlWithParams = new URL(SCRIPT_URL);
+            Object.keys(flatPayload).forEach(key => {
+                urlWithParams.searchParams.append(key, flatPayload[key]);
+            });
+
+            try {
+                const getResponse = await fetch(urlWithParams.toString(), {
+                    method: 'GET',
+                    mode: 'no-cors'
+                });
+                console.log('GET fallback response:', getResponse);
+                return true;
+            } catch (getError) {
+                console.error('GET fallback failed:', getError);
+                throw getError;
+            }
+        }
+    } catch (error) {
+        console.error('Error in sendDataToGoogleSheets:', error);
+        console.error('Error details:', {
+            message: error.message,
+            stack: error.stack,
+            name: error.name
+        });
+        return false;
+    }
+}
+
 function collectParticipantData() {
     // Collects participant metadata from the post-task questionnaire
     const getVal = name => {
