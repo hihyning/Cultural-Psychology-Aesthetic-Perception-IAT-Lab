@@ -731,6 +731,20 @@ function doOptions(e) {
 }
 
 function sendTrial(trial) {
+  // trial is a flat object, e.g.:
+  // {
+  //   section: 'trial',
+  //   trial: 1,
+  //   stimulusType: 'image',
+  //   stimulus: 'East1',
+  //   correctLabel: 'EAST',
+  //   userKey: 'e',
+  //   userLabel: 'EAST',
+  //   correct: true,
+  //   rt: 529,
+  //   timestamp: Date.now()
+  // }
+
   fetch(GOOGLE_SHEETS_ENDPOINT, {
     method: "POST",
     headers: {
