@@ -759,6 +759,6 @@ section.post-task {
 
 @media screen and (min-width: 1025px) {
     #mobile-warning {
-        display: none;
+        display: none !important;
     }
 }
