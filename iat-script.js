@@ -27,29 +27,29 @@ let practiceImages = [];
 
 // Prepare labeled image objects for practice
 const eastImages = [
-    {src: "Visual Stimuli/East/East1.png", label: "EAST"},
-    {src: "Visual Stimuli/East/East2.png", label: "EAST"},
-    {src: "Visual Stimuli/East/East3.png", label: "EAST"},
-    {src: "Visual Stimuli/East/East4.png", label: "EAST"},
-    {src: "Visual Stimuli/East/East5.png", label: "EAST"},
-    {src: "Visual Stimuli/East/East6.png", label: "EAST"},
-    {src: "Visual Stimuli/East/East7.png", label: "EAST"},
-    {src: "Visual Stimuli/East/East8.png", label: "EAST"},
-    {src: "Visual Stimuli/East/East9.png", label: "EAST"},
-    {src: "Visual Stimuli/East/East10.png", label: "EAST"}
+    {src: "Visual Stimuli/East/East1.jpg", label: "EAST"},
+    {src: "Visual Stimuli/East/East2.jpg", label: "EAST"},
+    {src: "Visual Stimuli/East/East3.jpg", label: "EAST"},
+    {src: "Visual Stimuli/East/East4.jpg", label: "EAST"},
+    {src: "Visual Stimuli/East/East5.jpg", label: "EAST"},
+    {src: "Visual Stimuli/East/East6.jpg", label: "EAST"},
+    {src: "Visual Stimuli/East/East7.jpg", label: "EAST"},
+    {src: "Visual Stimuli/East/East8.jpg", label: "EAST"},
+    {src: "Visual Stimuli/East/East9.jpg", label: "EAST"},
+    {src: "Visual Stimuli/East/East10.jpg", label: "EAST"}
 ];
 
 const westImages = [
-    {src: "Visual Stimuli/West/West11.png", label: "WEST"},
-    {src: "Visual Stimuli/West/West12.png", label: "WEST"},
-    {src: "Visual Stimuli/West/West13.png", label: "WEST"},
-    {src: "Visual Stimuli/West/West14.png", label: "WEST"},
-    {src: "Visual Stimuli/West/West15.png", label: "WEST"},
-    {src: "Visual Stimuli/West/West16.png", label: "WEST"},
-    {src: "Visual Stimuli/West/West17.png", label: "WEST"},
-    {src: "Visual Stimuli/West/West18.png", label: "WEST"},
-    {src: "Visual Stimuli/West/West19.png", label: "WEST"},
-    {src: "Visual Stimuli/West/West20.png", label: "WEST"}
+    {src: "Visual Stimuli/West/West11.jpg", label: "WEST"},
+    {src: "Visual Stimuli/West/West12.jpg", label: "WEST"},
+    {src: "Visual Stimuli/West/West13.jpg", label: "WEST"},
+    {src: "Visual Stimuli/West/West14.jpg", label: "WEST"},
+    {src: "Visual Stimuli/West/West15.jpg", label: "WEST"},
+    {src: "Visual Stimuli/West/West16.jpg", label: "WEST"},
+    {src: "Visual Stimuli/West/West17.jpg", label: "WEST"},
+    {src: "Visual Stimuli/West/West18.jpg", label: "WEST"},
+    {src: "Visual Stimuli/West/West19.jpg", label: "WEST"},
+    {src: "Visual Stimuli/West/West20.jpg", label: "WEST"}
 ];
 
 function startPractice1() {
