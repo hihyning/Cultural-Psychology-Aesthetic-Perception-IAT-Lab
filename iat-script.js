@@ -700,7 +700,7 @@ function computeIATScores(trialData) {
 }
 
 // Google Sheets Integration deployed
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx96CDdhJBbE6U_tT0KC7eZNUyeAtGcDGUe7BfRZG_s8BAoDR6zwUq8XYYnG1Tb_rbbMA/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz1zUPBDKqwtcBOFLBHq7RMAT2SNTUB4RDtFpeZ4dr5DKgdF0oj8Dt1TDTsSKeSdRxm3Q/exec';
 
 // Flattens nested objects (e.g., participantData, preTaskData) into a single-level object
 function flattenObject(obj, prefix = '', res = {}) {
