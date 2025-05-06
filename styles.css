@@ -685,6 +685,10 @@ section.post-task {
         display: flex;
     }
 
+    #mobile-warning h2{
+        margin-bottom: 0.25em;
+    }
+
     .course-description{
         margin-top: 0em;
         padding-top: 0em;
