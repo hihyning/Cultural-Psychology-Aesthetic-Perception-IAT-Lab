@@ -657,6 +657,8 @@ section.post-task {
 /* Hide mobile warning by default */
 #mobile-warning {
     margin-top: 1em;
+    margin-left: 0;
+    margin-right: 0;
     display: none;
     width: 100vw;
     justify-content: center;
@@ -665,6 +667,10 @@ section.post-task {
     padding-left: 1em;
     padding-right: 1em;
     padding-bottom: 1em;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    box-sizing: border-box;
 }
 
 /* Mobile warning and responsive styles */
@@ -683,6 +689,15 @@ section.post-task {
         margin-top: 0em;
         padding-top: 0em;
     }
+
+    .course-description p{
+        font-size: 0.8em;
+    }
+
+    .course-description h3{
+        font-size: 1.2em;
+    }
+
     #mobile-warning p{
         font-family: 'Space Grotesk', sans-serif;
         letter-spacing: -0.02em;
@@ -710,6 +725,7 @@ section.post-task {
 
     .header {
         flex-direction: column;
+        width: 100vw;
     }
 
     .course-description {
