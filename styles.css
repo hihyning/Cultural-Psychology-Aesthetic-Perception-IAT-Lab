@@ -653,3 +653,112 @@ section.post-task {
 .debrief-content p{
     font-size: 1.1rem;
 }
+
+/* Hide mobile warning by default */
+#mobile-warning {
+    margin-top: 1em;
+    display: none;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--yellow-color);
+    padding-left: 1em;
+    padding-right: 1em;
+    padding-bottom: 1em;
+}
+
+/* Mobile warning and responsive styles */
+@media screen and (max-width: 768px) {
+    body {
+        overflow-y: scroll;
+        padding: 0em;
+        width: 100vw;
+        overflow-x: hidden;
+    }
+    #mobile-warning {
+        display: flex;
+    }
+
+    .course-description{
+        margin-top: 0em;
+        padding-top: 0em;
+    }
+    #mobile-warning p{
+        font-family: 'Space Grotesk', sans-serif;
+        letter-spacing: -0.02em;
+        font-size: 1em;
+        line-height: 1em;
+    }
+
+    .title-container h2{
+        font-size: 1rem;
+    }
+
+    .title {
+        font-size: 1em;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+        padding-left: 1em;
+        padding-right: 1em;
+        line-height: 1em;
+        width: 100vw;
+    }
+
+    h1 {
+        font-size: 3rem;
+    }
+
+    .header {
+        flex-direction: column;
+    }
+
+    .course-description {
+        width: 90vw;
+        margin: 1em 0;
+    }
+
+    .title-container {
+        padding: 0 1em;
+    }
+
+    button {
+        font-size: 1em;
+        padding: 0.5em;
+        width: 90%;
+        margin: 0.5em auto;
+    }
+
+    .response-keys {
+        flex-direction: column;
+        gap: 0.5em;
+    }
+
+    .key-label {
+        font-size: 1em;
+    }
+    
+    #begin-button{
+        display: none;
+    }
+}
+
+/* Additional tablet breakpoint */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    h1 {
+        font-size: 4.5rem;
+    }
+
+    .course-description {
+        width: 50vw;
+    }
+
+    .title {
+        font-size: 1.2em;
+    }
+}
+
+@media screen and (min-width: 1025px) {
+    #mobile-warning {
+        display: none;
+    }
+}
