@@ -178,15 +178,21 @@
                 <label>List all the countries or cultures you most identify with:<input type="text" name="culturalID"></label>
                 
                 <label>Did one trial feel easier than the other? 
-                  <select name="easierBlock"><option>Yes</option><option>No</option><option>Unsure</option></select>
+                  <select name="easierBlock" onchange="document.getElementById('blockReflectionContainer').style.display = (this.value === 'Yes' || this.value === 'Unsure') ? 'block' : 'none';">
+                    <option>Yes</option>
+                    <option>No</option>
+                    <option>Unsure</option>
+                  </select>
                 </label>
                 
-                <label>If yes, which trial felt easier?</label>
-                <select name="blockReflection">
-                    <option value="">Please select...</option>
-                    <option value="Trial 1">Trial 1 (EAST/GOOD, WEST/BAD)</option>
-                    <option value="Trial 2">Trial 2 (EAST/BAD, WEST/GOOD)</option>
-                </select>
+                <div id="blockReflectionContainer" style="display:none;">
+                  <label>Which trial felt easier?</label>
+                  <select name="blockReflection">
+                      <option value="">Please select...</option>
+                      <option value="Trial 1">Trial 1 (EAST/GOOD, WEST/BAD)</option>
+                      <option value="Trial 2">Trial 2 (EAST/BAD, WEST/GOOD)</option>
+                  </select>
+                </div>
                 
                 <label>Do you feel your cultural background influenced your responses?</label>
                 <select name="influencedByCulture">
